@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript" src="https://alcdn.msauth.net/browser/2.16.1/js/msal-browser.js"></script>
+    <script src="https://statics.teams.microsoft.com/sdk/v1.5.2/js/MicrosoftTeams.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+        //this is where the user will land once they have done an Azure AD sign-in, if the fallback method for SSO is used
+        //Office SDK is initialized
+
+        microsoftTeams.initialize();
+            //Office.initialize = async function () {
+
+            //similar to Auth-Start options/parameters, but we need to define navigateToLoginRequestUrl: false or it sends us back to Auth-Start, which we do not want in this sample app.
+            const msalConfig = {
+                auth: {
+                    clientId: "16663a03-cdde-4816-af10-0fcfa0d24f47",
+                    redirectUri: location.protocol + "//" + location.hostname + "/auth-end.html",
+                    navigateToLoginRequestUrl: false
+                }
+            };
+
+            //MSAL ClientApp is initalized with msalConfig options
+            const clientApp = new msal.PublicClientApplication(msalConfig);
+
+            //this function handles the RedirectPromise and provides us with an Access Token (horray!)
+
+        clientApp.handleRedirectPromise().then((response) => {
+            microsoftTeams.authentication.notifySuccess({ idToken: response.idToken, accessToken: response.accessToken, tokenType: response.tokenType, expiresIn: response.expiresIn });
+        });
+
+    </script>
+</head>
+<body>
+    Auth end!
+
+    <div id="message"></div>
+</body>
+</html>

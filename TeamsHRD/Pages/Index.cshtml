@@ -1,0 +1,20 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Teams Home Realm Discovery Demo App</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>This sample app demonstrates how to build a HRD redirection page for use within Teams</a>.</p>
+
+    <div>
+        <button id="consentButton" style="display: none;" onclick="fallbackAuth()">Login Manually</button>
+        <button id="sharepointButton1" style="display: none;" onclick="sharepointRedirect1()">Go to SP1</button>
+        <button id="sharepointButton2" style="display: none;" onclick="sharepointRedirect2()">Go to SP2</button>
+    </div>
+
+</div>
+
+

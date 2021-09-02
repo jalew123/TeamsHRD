@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript" src="https://alcdn.msauth.net/browser/2.16.1/js/msal-browser.js"></script>
+    <script src="https://statics.teams.microsoft.com/sdk/v1.5.2/js/MicrosoftTeams.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+        //this page is opened by Office.context.ui.displayDialogAsync to kick-off the Azure AD sign-in process
+
+        //decale the required parameters/options for the MSAL library to use - it will redirect back to /auth-end.html once the Azure AD sign-in process is completed
+        const msalConfig = {
+            auth: {
+                clientId: "16663a03-cdde-4816-af10-0fcfa0d24f47",
+                redirectUri: location.protocol + "//" + location.hostname + "/auth-end.html"
+            }
+        };
+
+        //prompt: select_account used to require end-users to select their user-account for this demonstration app. In real world scenario, this may not be required
+
+        var requestObj = {
+            scopes: [`https://graph.microsoft.com/User.Read`],
+            prompt: "select_account"
+        };
+
+        //initalize the MSAL browser clientapp with the required configuration
+        const clientApp = new msal.PublicClientApplication(msalConfig);
+
+        //begins the sign-in process, by redirecting to Azure AD with the required parameters/options in this page.
+        //This SSO flow is using Code Grant with PKCE(following current best-practices)
+        clientApp.loginRedirect(requestObj);
+
+
+    </script>
+</head>
+<body>
+    Auth Start!
+</body>
+</html>
